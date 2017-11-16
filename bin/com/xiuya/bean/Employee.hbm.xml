@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- 1 配置哪个类和哪个表对应，name:实体类全路径，table：数据库表的名称 -->
+	<class name="com.xiuya.bean.Employee" table="employee">
+		<!-- 配置实体类id和表中id进行对应，hibernate要求实体类中有一个属性唯一，也要求一个字段作为唯一值 -->
+		<id name="id" column="id">
+			<!-- 设置数据库表中id的增长策略，native：生成表id值为主键且自增 -->
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 配置其他属性 -->
+		<property name="name" column="name"></property>
+		<property name="phone" column="phone"></property>
+	</class>
+
+
+</hibernate-mapping>
