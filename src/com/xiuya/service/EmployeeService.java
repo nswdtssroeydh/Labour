@@ -19,4 +19,9 @@ public class EmployeeService {
 	{
 		employeeDao.add(employee);
 	}
+	
+	public void delete(Employee employee)
+	{
+		employeeDao.delete(employee);
+	}
 }

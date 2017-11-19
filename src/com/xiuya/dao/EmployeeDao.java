@@ -5,21 +5,38 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.xiuya.bean.Employee;
-import com.xiuya.util.Tool;
+import com.xiuya.util.HibeinateUtils;
 
 public class EmployeeDao {
 
-	private SessionFactory sessionFactory;
+	private Session session;
+	private Session getCurrentSession()
+	{
+		if(this.session == null)
+			this.session = HibeinateUtils.sessionFactory.openSession();
+			
+		return this.session;
+	}
+	
+	public void closeSession()
+	{
+		this.session.close();
+	}
 
 	public void add(Employee employee)
 	{
-		this.sessionFactory = Tool.configuration.buildSessionFactory();
-		Session session = this.sessionFactory.openSession();
+		Session session = getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(employee);
 		transaction.commit();
-		session.close();
-		this.sessionFactory.close();
+	}
+	
+	public void delete(Employee employee)
+	{
+		Session session = getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.delete(employee);;
+		transaction.commit();
 	}
 	
 }

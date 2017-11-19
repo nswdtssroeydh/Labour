@@ -24,4 +24,12 @@ public class EmployeeController {
 		employee.setPhone(phone);
 		employeeService.add(employee);
 	}
+	
+	public void deleteEmployee(String name, String phone)
+	{
+		Employee employee = new Employee();
+		employee.setName(name);
+		employee.setPhone(phone);
+		employeeService.delete(employee);
+	}
 }
