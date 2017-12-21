@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class HibeinateUtils {
+public class HibernateUtils {
 
 	public static final ApplicationContext context;
 	public static final Configuration configuration;
@@ -16,6 +16,11 @@ public class HibeinateUtils {
 		configuration = new Configuration().configure();
 		sessionFactory = configuration.buildSessionFactory();
 		System.out.println("build");
+	}
+	
+	public static void closeResources()
+	{
+		sessionFactory.close();
 	}
 	
 }

@@ -72,5 +72,11 @@ public class Labour {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	@Override
+	public String toString() {
+		return "Labour [id=" + id + ", employeeId=" + employeeId + ", teaId=" + teaId + ", teaName=" + teaName
+				+ ", employeeName=" + employeeName + ", amount=" + amount + ", price=" + price + ", salary=" + salary
+				+ ", date=" + date + "]";
+	}
 	
 }

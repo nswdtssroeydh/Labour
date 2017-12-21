@@ -11,13 +11,27 @@
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd ">
 
 	<bean id="employeeDao" class="com.xiuya.dao.EmployeeDao"></bean>
-	
 	<bean id="employeeService" class="com.xiuya.service.EmployeeService">
 		<property name="employeeDao" ref="employeeDao"></property>
 	</bean>
-	
 	<bean id="employeeController" class="com.xiuya.controller.EmployeeController">
 		<property name="employeeService" ref="employeeService"></property>
+	</bean>
+	
+	<bean id="teaDao" class="com.xiuya.dao.TeaDao"></bean>
+	<bean id="teaService" class="com.xiuya.service.TeaService">
+		<property name="teaDao" ref="teaDao"></property>
+	</bean>
+	<bean id="teaController" class="com.xiuya.controller.TeaController">
+		<property name="teaService" ref="teaService"></property>
+	</bean>
+	
+	<bean id="labourDao" class="com.xiuya.dao.LabourDao"></bean>
+	<bean id="labourService" class="com.xiuya.service.LabourService">
+		<property name="labourDao" ref="labourDao"></property>
+	</bean>
+	<bean id="labourController" class="com.xiuya.controller.LabourController">
+		<property name="labourService" ref="labourService"></property>
 	</bean>
 	
 </beans>

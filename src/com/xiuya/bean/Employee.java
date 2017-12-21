@@ -28,5 +28,9 @@ public class Employee {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", phone=" + phone + "]";
+	}
 	
 }
