@@ -1,5 +1,5 @@
 # Labour
-四娘的员工劳动力统计项目
+员工劳动力统计项目
 
 使用java语言开发，开发工具为eclipse oxygen
 项目使用基本的mvc模式，即model，view，controller和service层
