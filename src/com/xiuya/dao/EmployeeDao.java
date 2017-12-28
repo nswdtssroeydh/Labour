@@ -61,8 +61,6 @@ public class EmployeeDao {
 		{
 			e.printStackTrace();
 			transaction.rollback();
-		}finally {
-			session.close();
 		}
 	}
 	

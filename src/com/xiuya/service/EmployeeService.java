@@ -1,5 +1,6 @@
 package com.xiuya.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.xiuya.bean.Employee;
@@ -8,6 +9,7 @@ import com.xiuya.dao.EmployeeDao;
 public class EmployeeService {
 
 	private EmployeeDao employeeDao;
+	private static final int pageSize = 7;
 	
 	public EmployeeDao getEmployeeDao() {
 		return employeeDao;
@@ -47,8 +49,37 @@ public class EmployeeService {
 			return employeeDao.getAllEmployees();
 	}
 	
+	public List<Employee> getEmployeeByName(String name, Integer page)
+	{
+		if(!"".equals(name))
+		{
+			List<Employee> all = employeeDao.selectByName(name);
+			return pageBy(all, page);
+		}
+		else
+		{
+			List<Employee> all = employeeDao.getAllEmployees();
+			return pageBy(all, page);
+		}
+	}
+	
 	public void updateEmployee(int id, String name, String phone)
 	{
 		employeeDao.updateEmployee(id, name, phone);
+	}
+	
+	public List<Employee> pageBy(List<Employee> all, Integer page)
+	{
+		List<Employee> result = new ArrayList<>();
+		int cur = page - 1;
+		if(all.size()/pageSize < cur)
+		{
+			return result;
+		}
+		
+		for(int i = cur*pageSize; i < all.size() && i < (cur + 1)*pageSize; i++)
+			result.add(all.get(i));
+		
+		return result;
 	}
 }

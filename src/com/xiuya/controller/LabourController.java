@@ -7,15 +7,25 @@ import java.util.List;
 
 import com.xiuya.bean.Labour;
 import com.xiuya.service.LabourService;
+import com.xiuya.util.HibernateUtils;
 
 public class LabourController {
 
 	private LabourService labourService;
+	private static LabourController instance;
 
 	public LabourService getLabourService() {
 		return labourService;
 	}
 
+	public static LabourController getInstance()
+	{
+		if(null == instance)
+			return (LabourController) HibernateUtils.context.getBean("labourController");
+		else
+			return instance;
+	}
+	
 	public void setLabourService(LabourService labourService) {
 		this.labourService = labourService;
 	}
@@ -44,6 +54,20 @@ public class LabourController {
 			e.printStackTrace();
 		}
 	}
+	
+//	public void addLabour(Integer employeeId, Integer teaId, Double amount, String year, String month, String day)
+//	{
+//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//		java.util.Date date;
+//		try {
+//			date = format.parse(year + "-" + month + "-" + day);
+//			labourService.addLabour(teaId, employeeId, amount, date);
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("add error");
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void deleteLabour(String idStr)
 	{

@@ -7,6 +7,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.xiuya.bean.Employee;
 import com.xiuya.bean.Tea;
 import com.xiuya.util.HibernateUtils;
 
@@ -73,6 +74,7 @@ public class TeaDao {
 			if(tea == null)
 			{
 				System.out.println("not that tea");
+				transaction.commit();
 				return;
 			}
 			session.delete(tea);
@@ -121,6 +123,25 @@ public class TeaDao {
 			e.printStackTrace();
 			transaction.rollback();
 			System.out.println("update error!!!");
+		}
+	}
+	
+	public List<Tea> selectTeaByName(String name)
+	{
+		Session session = null;
+		try {
+			session = getCurrentSession();
+			String sql = "from Tea where name like ?";
+			Query query = session.createQuery(sql);
+			query.setParameter(0, "%" + name + "%");
+			List<Tea> teas = query.list();
+			
+			return teas;
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("select error!!!");
+			return null;
 		}
 	}
 }
