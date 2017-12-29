@@ -101,7 +101,27 @@ public class LabourController {
 		}
 	}
 	
-	public List<Labour> getLabourByName(String employeeName, String yearFrom, String monthFrom, String dayFrom, String yearTo, String monthTo, String dayTo)
+	public List<Labour> getLabourByName(String employeeName, String yearFrom, String monthFrom, String dayFrom, String yearTo, String monthTo, String dayTo, String pageStr)
+	{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date dateFrom;
+		java.util.Date dateTo;
+		int page = Integer.parseInt(pageStr);
+		List<Labour> result = new ArrayList<Labour>();
+		try {
+			dateFrom = format.parse(yearFrom + "-" + monthFrom + "-" + dayFrom);
+			dateTo = format.parse(yearTo + "-" + monthTo + "-" + dayTo);
+			result = labourService.getLabourByName(employeeName, dateFrom, dateTo, page);
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("query error");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public int getLabourByNameCount(String employeeName, String yearFrom, String monthFrom, String dayFrom, String yearTo, String monthTo, String dayTo)
 	{
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date dateFrom;
@@ -113,11 +133,34 @@ public class LabourController {
 			result = labourService.getLabourByName(employeeName, dateFrom, dateTo);
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("update error");
+			System.out.println("query error");
 			e.printStackTrace();
 		}
 		
-		return result;
+		return result.size();
+	}
+	
+	public double getLabourByNameCountSalary(String employeeName, String yearFrom, String monthFrom, String dayFrom, String yearTo, String monthTo, String dayTo)
+	{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date dateFrom;
+		java.util.Date dateTo;
+		List<Labour> result = new ArrayList<Labour>();
+		double count = 0;
+		try {
+			dateFrom = format.parse(yearFrom + "-" + monthFrom + "-" + dayFrom);
+			dateTo = format.parse(yearTo + "-" + monthTo + "-" + dayTo);
+			result = labourService.getLabourByName(employeeName, dateFrom, dateTo);
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("query error");
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i < result.size(); i++)
+			count += result.get(i).getSalary();
+		
+		return count;
 	}
 	
 }

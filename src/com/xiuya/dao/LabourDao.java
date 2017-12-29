@@ -110,6 +110,8 @@ public class LabourDao {
 				sql = sql + " and employeeName like ?";
 			}
 			
+			sql = sql + " order by date desc";
+			
 			Query query = session.createQuery(sql);
 			if(dateFrom == null)
 			{
@@ -149,13 +151,13 @@ public class LabourDao {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date from;
 		try {
-			from = format.parse("2017-12-1");
-			java.util.Date to = format.parse("2017-12-20");
+			from = format.parse("2017-1-1");
+			java.util.Date to = format.parse("2017-12-31");
 			Date from1 = new Date(from.getTime());
 			Date to1 = new Date(to.getTime());
 			
 			
-			List<Labour> labours = dao.getLabourByName("", from1, to1);
+			List<Labour> labours = dao.getLabourByName("", null, null);
 			System.out.println(to1.getYear() + ":" + to1.getMonth() + ":" + to1.getDate());
 			for(Labour labour:labours)
 				System.out.println(labour);

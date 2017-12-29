@@ -48,6 +48,9 @@ public class InputLabourWindow {
 	private JLabel label_4;
 	private JLabel label_5;
 	private JTextField amountField;
+	private JTextField textField;
+	private JTextField textField_1;
+	private static InputLabourWindow instance;
 
 	/**
 	 * Launch the application.
@@ -64,6 +67,15 @@ public class InputLabourWindow {
 			}
 		});
 	}
+	
+	public static InputLabourWindow getInstance()
+	{
+		if(null == instance)
+			return new InputLabourWindow();
+		else
+			return instance;
+	}
+	
 	public LabourController getLabourController() {
 		return labourController;
 	}
@@ -95,7 +107,12 @@ public class InputLabourWindow {
 	public void setTeaController(TeaController teaController) {
 		this.teaController = teaController;
 	}
-
+	public JFrame getFrame() {
+		return frame;
+	}
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
 	/**
 	 * Create the application.
 	 */
@@ -245,6 +262,27 @@ public class InputLabourWindow {
 		amountField.setColumns(10);
 		amountField.setBounds(376, 228, 72, 28);
 		frame.getContentPane().add(amountField);
+		
+		textField = new JTextField();
+		textField.setText("                    编号           姓名        电话");
+		textField.setColumns(10);
+		textField.setBounds(18, 47, 265, 28);
+		frame.getContentPane().add(textField);
+		
+		JButton returnButton = new JButton("返回");
+		returnButton.setBounds(18, 280, 86, 29);
+		returnButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				returnButtonClicked(e);
+			}
+		});
+		frame.getContentPane().add(returnButton);
+		
+		textField_1 = new JTextField();
+		textField_1.setText("                    编号         茶叶名        单价");
+		textField_1.setColumns(10);
+		textField_1.setBounds(334, 47, 265, 28);
+		frame.getContentPane().add(textField_1);
 	}
 	
 	private void showEmployeeOnTable(String name)
@@ -297,14 +335,22 @@ public class InputLabourWindow {
 	{
 		String employeeId = this.employeeIdField.getText();
 		String teaId = this.teaIdField.getText();
+		
+//		Employee employee = this.employeeController.selectEmployee(employeeId, "").get(0);
+//		if(null == employee)
+//		{
+//			
+//		}
+		
 		List<Employee> employees = this.employeeController.selectEmployee(employeeId, "");
-		if(employees.size() != 1 || "".equals(employeeId))
+		System.out.println("size:" + employees.size() + "," + employees);
+		if(employees.get(0) == null || "".equals(employeeId))
 		{
 			JOptionPane.showMessageDialog(null, "用户编号输入错误！", "错误！", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		List<Tea> teas = this.teaController.getTea(teaId);
-		if(teas.size() != 1 || "".equals(teaId))
+		if(teas.get(0) == null || "".equals(teaId))
 		{
 			JOptionPane.showMessageDialog(null, "茶叶编号输入错误！", "错误！", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -332,7 +378,7 @@ public class InputLabourWindow {
 				int month = Integer.parseInt(tokens[1]);
 				int day = Integer.parseInt(tokens[2]);
 				System.out.println(year + "," + month + "," + day);
-				if(year <= 1900 || year >= 2100 || month <= 0 || month >= 13 || day <= 0 || day >= 32)
+				if(year <= 1900 || year >= 2200 || month <= 0 || month >= 13 || day <= 0 || day >= 32)
 				{
 					JOptionPane.showMessageDialog(null, "日期超出范围！", "错误！", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -365,5 +411,17 @@ public class InputLabourWindow {
 			this.labourController.addLabour(teaId, tea.getName(), employeeId, employee.getName(), amountStr, tea.getPrice() + "", salary + "", year + "", month + "", day + "");
 			JOptionPane.showMessageDialog(null, "添加成功！", "成功！", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	public void returnButtonClicked(ActionEvent e)
+	{
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					getFrame().setVisible(false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

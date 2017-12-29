@@ -1,5 +1,6 @@
 package com.xiuya.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import com.xiuya.dao.LabourDao;
 public class LabourService {
 
 	private LabourDao labourDao;
+	private static final int pageSize = 15;
 
 	public LabourDao getLabourDao() {
 		return labourDao;
@@ -48,6 +50,27 @@ public class LabourService {
 	// 查
 	public List<Labour> getLabourByName(String employeeName, Date dateFrom, Date dateTo) {
 		return labourDao.getLabourByName(employeeName, dateFrom, dateTo);
+	}
+	
+	// 分页查找
+	public List<Labour> getLabourByName(String employeeName, Date dateFrom, Date dateTo, Integer page) {
+		List<Labour> all = labourDao.getLabourByName(employeeName, dateFrom, dateTo);
+		return pageBy(all, page);
+	}
+	
+	public List<Labour> pageBy(List<Labour> all, Integer page)
+	{
+		List<Labour> result = new ArrayList<>();
+		int cur = page - 1;
+		if(all.size()/pageSize < cur)
+		{
+			return result;
+		}
+		
+		for(int i = cur*pageSize; i < all.size() && i < (cur + 1)*pageSize; i++)
+			result.add(all.get(i));
+		
+		return result;
 	}
 
 }
